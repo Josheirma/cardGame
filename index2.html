@@ -35,10 +35,10 @@
                         <input id="drawCardBtnUpper" type="button" value="Draw Card" onclick = "drawPlayerCardRow2()">
                         <input id="dealCardsBtn" type="button" value="Deal" onclick="drawDealerCards()">
                         <input id="newRoundBtn" type="button" value="New Round" onclick="newRound()">
-                        <input id="wagerButtonOne" type="button" value="Wager 1" onclick="wager(1)">
-                        <input id="wagerButtonFive" type="button" value="Wager 5" onclick="wager(5)">
-                        <input id="wagerButtonFifteen" type="button" value="Wager 15" onclick="wager(15)">
-                        <input id="wagerButtonTwentyfive" type="button" value="Wager 25" onclick="wager(25)">
+                        <input class = "wager_button" id="wagerButtonOne" type="button" value="Wager 1" onclick="wager(1)">
+                        <input class = "wager_button" id="wagerButtonFive" type="button" value="Wager 5" onclick="wager(5)">
+                        <input class = "wager_button" id="wagerButtonFifteen" type="button" value="Wager 15" onclick="wager(15)">
+                        <input class = "wager_button" id="wagerButtonTwentyfive" type="button" value="Wager 25" onclick="wager(25)">
                         <br><br>
                     </div>
                 </div>
@@ -52,7 +52,7 @@
     </div>
     <script>
 const AMOUNT_OF_STARTING_POINTS = 10;
-//Amt of space between cards. 
+////Amt of space between cards. 
 const CARDGAP = 70;
 //Four decks
 const AMTOFCARDS = (52 * 4);
@@ -76,10 +76,11 @@ let playerScoreRow3 = 0;
 let FirstDealIsDoneFlag = false;
 let SecondDealIsDoneFlag = false;
 //hold aces for dealer, player's first hand, and player's 'divided hand.'' 
-let AreThereAcesArrayRow = ["no ace", "no ace", "no ace", "no ace", "no ace", "no ace", "no ace", "no ace",
-    "no ace", "no ace", "no ace", "no ace", "no ace", "no ace", "no ace", "no ace", "no ace", "no ace",
-    "no ace", "no ace"
-];
+//let AreThereAcesArrayRow = ["no ace", "no ace", "no ace", "no ace", "no ace", "no ace", "no ace", "no ace",
+//    "no ace", "no ace", "no ace", "no ace", "no ace", "no ace", "no ace", "no ace", "no ace", "no ace",
+//    "no ace", "no ace"
+//];
+let AreThereAcesArrayRow = Array(20).fill("no ace");
 let counterOfPressedDealerDrawBtn = 0;
 //get the context to use canvas, is global
 let ctx1 = canvasDealer.getContext("2d");
@@ -106,7 +107,9 @@ async function drawDealerCards() {
         }
         //how many cards have been dealt to dealer. 
         multiplierRow1++;
-        let mark = getMarkOfCard();
+        //let mark = getMarkOfCard();
+        //for testin delaers hand.
+        mark = dealersHandPrompt();
         //for testing, uncomment counterofpresseddealerdrawbtn iterater and ifs.
         //could also test charlie, for example, by changing first six values.
          /*
@@ -196,6 +199,8 @@ let ctx2 = canvasPlayerRow2.getContext("2d");
 let tenCounter = 0;
 let IsADivideFlag = false;
 
+
+//upper row for player - needs to be renamed
 function drawPlayerCardRow2() {
     totalAllCardsPlayedBeforeShuffle++;
     //For debugging.
@@ -225,8 +230,8 @@ function drawPlayerCardRow2() {
     } 
     */
     //else{
-    mark = getMarkOfCard();
-    mark = "10"
+    //mark = getMarkOfCard();
+    mark = firtsHandPrompt();
     //}
     //Draw the card, graphically.
     ctx2.beginPath();
@@ -321,7 +326,8 @@ let alternateHandForCharlieRow3 = 0;
 let counterOfPressedLowerDrawBtn = 0;
 //Graphical context.
 let ctx3 = canvasPlayerRow3.getContext("2d");
-//This is the third row of cards for when two tens are divided.
+
+//This is the lower row of cards for when two tens are divided: needs to be renamed.
 function drawPlayerCardRow3(mark) {
     //For shuffling.
     totalAllCardsPlayedBeforeShuffle++;
@@ -332,8 +338,8 @@ function drawPlayerCardRow3(mark) {
     numberOfIterationsRow3++;
     if (mark === "0") {
         //Gets value of card.
-        mark = getMarkOfCard();
-        mark = "A";
+        //mark = getMarkOfCard();
+        mark = SecondHandPrompt()
     }
     //Left this for any need of testing to set cards with values that take place of mark.
     //For two tens which needs to divide, don't uncomment first 'if' statement.
@@ -420,52 +426,62 @@ function setsUpGame() {
     dealCardsBtn.disabled = true;
     drawCardBtnUpper.disabled = true;
 }
+
+// 13 x  20 = 260 cards 
 //If indexed value is one, than the card has been used in the next array.
-let deckUseage = [
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-];
-//Five decks of 52 cards each
-let decks = [
-    "A", "Q", "K", "J", "2", "3", "4", "5", "6", "7", "8", "9", "10",
-    "A", "Q", "K", "J", "2", "3", "4", "5", "6", "7", "8", "9", "10",
-    "A", "Q", "K", "J", "2", "3", "4", "5", "6", "7", "8", "9", "10",
-    "A", "Q", "K", "J", "2", "3", "4", "5", "6", "7", "8", "9", "10",
-    "A", "Q", "K", "J", "2", "3", "4", "5", "6", "7", "8", "9", "10",
-    "A", "Q", "K", "J", "2", "3", "4", "5", "6", "7", "8", "9", "10",
-    "A", "Q", "K", "J", "2", "3", "4", "5", "6", "7", "8", "9", "10",
-    "A", "Q", "K", "J", "2", "3", "4", "5", "6", "7", "8", "9", "10",
-    "A", "Q", "K", "J", "2", "3", "4", "5", "6", "7", "8", "9", "10",
-    "A", "Q", "K", "J", "2", "3", "4", "5", "6", "7", "8", "9", "10",
-    "A", "Q", "K", "J", "2", "3", "4", "5", "6", "7", "8", "9", "10",
-    "A", "Q", "K", "J", "2", "3", "4", "5", "6", "7", "8", "9", "10",
-    "A", "Q", "K", "J", "2", "3", "4", "5", "6", "7", "8", "9", "10",
-    "A", "Q", "K", "J", "2", "3", "4", "5", "6", "7", "8", "9", "10",
-    "A", "Q", "K", "J", "2", "3", "4", "5", "6", "7", "8", "9", "10",
-    "A", "Q", "K", "J", "2", "3", "4", "5", "6", "7", "8", "9", "10",
-    "A", "Q", "K", "J", "2", "3", "4", "5", "6", "7", "8", "9", "10",
-    "A", "Q", "K", "J", "2", "3", "4", "5", "6", "7", "8", "9", "10",
-    "A", "Q", "K", "J", "2", "3", "4", "5", "6", "7", "8", "9", "10",
-    "A", "Q", "K", "J", "2", "3", "4", "5", "6", "7", "8", "9", "10"
-];
+// let deckUseage = [
+//     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+//     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+//     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+//     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+//     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+//     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+//     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+//     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+//     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+//     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+//     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+//     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+//     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+//     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+//     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+//     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+//     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+//     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+//     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+//     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+// ];
+deckUseage = new Array(260).fill(0);
+
+
+//13 x 20 = 260 cards in total.
+// 20 rows
+// let decks = [
+//     "A", "Q", "K", "J", "2", "3", "4", "5", "6", "7", "8", "9", "10",
+//     "A", "Q", "K", "J", "2", "3", "4", "5", "6", "7", "8", "9", "10",
+//     "A", "Q", "K", "J", "2", "3", "4", "5", "6", "7", "8", "9", "10",
+//     "A", "Q", "K", "J", "2", "3", "4", "5", "6", "7", "8", "9", "10",
+//     "A", "Q", "K", "J", "2", "3", "4", "5", "6", "7", "8", "9", "10",
+//     "A", "Q", "K", "J", "2", "3", "4", "5", "6", "7", "8", "9", "10",
+//     "A", "Q", "K", "J", "2", "3", "4", "5", "6", "7", "8", "9", "10",
+//     "A", "Q", "K", "J", "2", "3", "4", "5", "6", "7", "8", "9", "10",
+//     "A", "Q", "K", "J", "2", "3", "4", "5", "6", "7", "8", "9", "10",
+//     "A", "Q", "K", "J", "2", "3", "4", "5", "6", "7", "8", "9", "10",
+//     "A", "Q", "K", "J", "2", "3", "4", "5", "6", "7", "8", "9", "10",
+//     "A", "Q", "K", "J", "2", "3", "4", "5", "6", "7", "8", "9", "10",
+//     "A", "Q", "K", "J", "2", "3", "4", "5", "6", "7", "8", "9", "10",
+//     "A", "Q", "K", "J", "2", "3", "4", "5", "6", "7", "8", "9", "10",
+//     "A", "Q", "K", "J", "2", "3", "4", "5", "6", "7", "8", "9", "10",
+//     "A", "Q", "K", "J", "2", "3", "4", "5", "6", "7", "8", "9", "10",
+//     "A", "Q", "K", "J", "2", "3", "4", "5", "6", "7", "8", "9", "10",
+//     "A", "Q", "K", "J", "2", "3", "4", "5", "6", "7", "8", "9", "10",
+//     "A", "Q", "K", "J", "2", "3", "4", "5", "6", "7", "8", "9", "10",
+//     "A", "Q", "K", "J", "2", "3", "4", "5", "6", "7", "8", "9", "10"
+// ];
+
+let singleDeck = ["A", "Q", "K", "J", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
+let decks = Array.from({ length: 20 }, () => [...singleDeck]).flat();
+
 
     let text = "BLACKJACK 5 card dealer";
     document.getElementById('title').textContent = text;
@@ -508,6 +524,20 @@ function getMarkOfCard() {
     return (decks[i]);
 }
 
+function SetAllWagerButtons(visibleflagisdisabled){
+// Select all elements with the class 'wager-button'
+const wagerButtons = document.querySelectorAll('wager_button');
+
+if(visibleflag){
+// Disable all wager buttons
+wagerButtons.forEach(button => { button.disabled = true;})}
+else{
+wagerButtons.forEach(button => { button.disabled = false;})
+}
+}
+
+
+
 function wager(points_Wagered) {
     //Not enough points to make wager.
     if (points_Wagered > pointsHave) {
@@ -516,10 +546,11 @@ function wager(points_Wagered) {
     pointsWagered = points_Wagered;
     //Makes upper draw button show and make all waging button not showing.
     drawCardBtnUpper.disabled = false;
-    wagerButtonOne.disabled = true;
-    wagerButtonFive.disabled = true;
-    wagerButtonFifteen.disabled = true;
-    wagerButtonTwentyfive.disabled = true;
+    //wagerButtonOne.disabled = true;
+    //wagerButtonFive.disabled = true;
+    //wagerButtonFifteen.disabled = true;
+    //wagerButtonTwentyfive.disabled = true;
+    SetAllWagerButtons(true);
 }
 
 function onDivideHand() {
@@ -568,11 +599,16 @@ async function newRound() {
     //clears out messages
     document.getElementById('messageLower').textContent = "";
     document.getElementById('messageUnderRow2').textContent = "";
+    
+    
     //Shows wagers.
-    wagerButtonOne.disabled = false;
-    wagerButtonFive.disabled = false;
-    wagerButtonFifteen.disabled = false;
-    wagerButtonTwentyfive.disabled = false;
+    // wagerButtonOne.disabled = false;
+    // wagerButtonFive.disabled = false;
+    // wagerButtonFifteen.disabled = false;
+    // wagerButtonTwentyfive.disabled = false;
+    SetAllWagerButtons(false);
+    
+    
     //For spacing cards.
     multiplierRow1 = -1;
     dealerHandTotal = 0;
@@ -731,22 +767,25 @@ async function shuffleTheDeck() {
     //Set deck to unused, zero.
     deckUseage = new Array(260).fill(0);
     //Turns off buttons, wait with message, reshow original message, and turn on wager buttons.
-    wagerButtonOne.disabled = true;
-    wagerButtonFive.disabled = true;
-    wagerButtonFifteen.disabled = true;
-    wagerButtonTwentyfive.disabled = true;
+    // wagerButtonOne.disabled = true;
+    // wagerButtonFive.disabled = true;
+    // wagerButtonFifteen.disabled = true;
+    // wagerButtonTwentyfive.disabled = true;
+    SetAllWagerButtons(true);
     await new Promise(resolve => setTimeout(resolve, 1500));
-    wagerButtonOne.disabled = false;
-    wagerButtonFive.disabled = false;
-    wagerButtonFifteen.disabled = false;
-    wagerButtonTwentyfive.disabled = false;
+    // wagerButtonOne.disabled = false;
+    // wagerButtonFive.disabled = false;
+    // wagerButtonFifteen.disabled = false;
+    // wagerButtonTwentyfive.disabled = false;
+    SetAllWagerButtons(false);
 }
 
 function endGame() {
-    wagerButtonOne.disabled = true;
-    wagerButtonFive.disabled = true;
-    wagerButtonFifteen.disabled = true;
-    wagerButtonTwentyfive.disabled = true;
+    // wagerButtonOne.disabled = true;
+    // wagerButtonFive.disabled = true;
+    // wagerButtonFifteen.disabled = true;
+    // wagerButtonTwentyfive.disabled = true;
+    SetAllWagerButtons(true);
     newRoundBtn.disabled = true;
     let text = "You have won the game!";
     document.getElementById('title').textContent = text;
@@ -1006,7 +1045,23 @@ function checkPlayerRow3ForCompleteness() {
     }
 }
 setsUpGame();
-    </script>
+
+function firtsHandPrompt(){
+
+    let card = prompt("Enter Users 1st Card:")
+    return card;
+}
+function secondHandPrompt(){
+    let card = prompt("Enter Users 2nd Card:")
+    return card;
+
+}
+function dealersHandPrompt(){
+    let card = prompt("Enter Dealers Next Card:")
+    return card;
+
+}
+</script>
 </body>
 
 </html>
