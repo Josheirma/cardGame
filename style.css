@@ -1,11 +1,11 @@
 body {}
 
 #container {
-    background-color: whitesmoke;
+    background-color: rgb(245, 245, 245);
     /*display: block;*/
-    max-height: 540px;
+    max-height: 740px;
     border: 2px solid rgb(0, 0, 0);
-    height: 85%;
+    height: 100%;
     width: 50%;
     text-align: center;
     border-radius: 4em;
@@ -17,7 +17,9 @@ body {}
 
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 290px;
+    margin-bottom: 0px;
+    background-color: yellow;
 }
 
 #headerContainer {
@@ -49,10 +51,17 @@ body {}
     */
 
 #messageUnderRow2 {
-    margin-bottom: 10px;
+    
 }
+
+#canvasPlayerRow2{
+    background-color: blueviolet;
+}
+
+
 #containsUpperButtons{
 
+    margin-top: 80px;
     
 }
 
@@ -62,15 +71,18 @@ input{
 
 #container {
  
-    background-color: white;
+    background-color: rgb(2, 255, 255);
 
     }
 
 #forFlex {
    
-   background-color:wh
+   background-color:yellow;
 }
 
+#canvasPlayerRow3{
+    background-color: red;
+}
 
 
 
@@ -82,7 +94,8 @@ input{
     
     #container{
         
-        min-width: 500px
+        min-width: 500px;
+       
     }
     
     
@@ -113,8 +126,8 @@ input{
     }
 
     #container {
-        max-width: 500px;
-        background-color:white;
+       
+        background-color:green;
     }
 }
 
