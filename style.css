@@ -1,4 +1,6 @@
-body {}
+body {
+    min-width: 879px;
+}
 
 #container {
     background-color: whitesmoke;
@@ -6,7 +8,7 @@ body {}
     max-height: 540px;
     border: 2px solid rgb(0, 0, 0);
     height: 85%;
-    width: 50%;
+    width: 80%;
     text-align: center;
     border-radius: 4em;
     box-shadow: 10px 20px 30px rgba(0, 0, 0, .6);
@@ -22,6 +24,7 @@ body {}
 
 #headerContainer {
     display: flex;
+    
 
 }
 
@@ -47,9 +50,20 @@ body {}
     height: 100vh;
 }
     */
+#canvasDealer{
+    margin-top: 9px;
+}
+#drawCardBtnUpper{
 
+    
+}
 #messageUnderRow2 {
     margin-bottom: 10px;
+    font-weight:bold;
+}
+
+#messageLower{
+    font-weight:bold;
 }
 #containsUpperButtons{
 
@@ -57,7 +71,7 @@ body {}
 }
 
 input{
-    font-size:.4em;
+    font-size:1.2em;
 }
 
 #container {
@@ -82,7 +96,7 @@ input{
     
     #container{
         
-        min-width: 500px
+        
     }
     
     
@@ -113,7 +127,7 @@ input{
     }
 
     #container {
-        max-width: 500px;
+        max-width: 1024px;
         background-color:white;
     }
 }
