@@ -65,7 +65,7 @@ let multiplierRow1 = -1;
 const INITIALROW = 84;
 let dealerHandTotal = 0;
 let isAllDelt = false;
-let playerScoreRow2 = 0;
+let playerScoreOnRow = 0;
 let playerScoreRow3 = 0;
 let FirstDealIsDoneFlag = false;
 let SecondDealIsDoneFlag = false;
@@ -194,7 +194,7 @@ function drawPlayerCardTop() {
         if (numberOfCardsDeltRow2 == 1 || numberOfCardsDeltRow2 == 2) {
             tenCounter++;
         }
-        playerScoreRow2 = playerScoreRow2 + 10;
+        playerScoreOnRow = playerScoreOnRow + 10;
         alternateHandForCharlieRow2 = alternateHandForCharlieRow2 + 10;
     }
     //ace
@@ -202,7 +202,7 @@ function drawPlayerCardTop() {
         numberOfCardsDeltRow2++;
         counterAcesRow = counterAcesRow + 1;
         //Can be changed to a one value later.
-        playerScoreRow2 = playerScoreRow2 + 11;
+        playerScoreOnRow = playerScoreOnRow + 11;
         //Sets this to allow changing an ace to one in row two. 
         AreThereAcesArrayRow[counterAcesRow] = "is row2 ace";
         //Charlie counts aces as one, not eleven.  Charlie is a hand with five cards that wins.
@@ -210,7 +210,7 @@ function drawPlayerCardTop() {
     }
     //Number cards two through nine, no one, because one is an ace.
     else {
-        playerScoreRow2 = playerScoreRow2 + parseInt(mark);
+        playerScoreOnRow = playerScoreOnRow + parseInt(mark);
         numberOfCardsDeltRow2++;
         alternateHandForCharlieRow2 = alternateHandForCharlieRow2 + parseInt(mark);
     }
@@ -435,7 +435,7 @@ function onDivideHand() {
     //Erases second card of row two, a ten!
     //Canvas is zero to fifty-one, this is a width of fifty-two.
     ctx2.clearRect(INITIALROW + (CARDGAP) - 1, 0, 52, 78);
-    playerScoreRow2 = playerScoreRow2 - 10;
+    playerScoreOnRow = playerScoreOnRow - 10;
 }
 
 
@@ -474,7 +474,7 @@ async function newRound() {
     dealerHandTotal = 0;
     isAllDelt = false;
     //Reset rounds' scores.
-    playerScoreRow2 = 0;
+    playerScoreOnRow = 0;
     playerScoreRow3 = 0;
     pointsWagered = 0;
     //For spacing cards.
@@ -694,7 +694,7 @@ function checkFirstHandForDealer() {
             checkEndOfHands();
         }
         //Already checked dealer for blackjack, therefor is less than 21 and has more points than player
-        else if (dealerHandTotal >= playerScoreRow2) {
+        else if (dealerHandTotal >= playerScoreOnRow) {
             //DEALER WINS
             pointsHave = pointsHave - pointsWagered;
             if (pointsHave < 0) {
@@ -715,7 +715,7 @@ function checkFirstHandForDealer() {
         }
         //player is under 21, because didn't score blackjack before cards dealt (wouldn't be here.)
         //Dealer is less than 21 too, and player wins by points over dealer.
-        else if (dealerHandTotal < playerScoreRow2) {
+        else if (dealerHandTotal < playerScoreOnRow) {
             //PLAYER WINS       
             pointsHave = pointsHave + pointsWagered;
             let text = "";
@@ -738,18 +738,18 @@ function checkFirstHandForDealer() {
 
 function checkPlayerRow2ForCompleteness() {
     //If there is an ace and deal is over 21 change next ace to a one.
-    if (playerScoreRow2 > 21) {
+    if (playerScoreOnRow > 21) {
         for (let i = 0; i < AMTOFCARDS; i++) {
             if (AreThereAcesArrayRow[i] == "is row2 ace") {
                 AreThereAcesArrayRow[i] = "used ace";
-                playerScoreRow2 = playerScoreRow2 - 10;
+                playerScoreOnRow = playerScoreOnRow - 10;
                 break;
             }
         }
     }
-    console.log("3:", playerScoreRow2);
+    console.log("3:", playerScoreOnRow);
     //Player scores over 21, so busts.
-    if (playerScoreRow2 > 21) {
+    if (playerScoreOnRow > 21) {
         pointsHave = pointsHave - pointsWagered;
         if (pointsHave < 0) {
             pointsHave = 0;
@@ -769,7 +769,7 @@ function checkPlayerRow2ForCompleteness() {
         checkEndOfHands();
     }
     //Player scores blackjack.
-    else if (playerScoreRow2 == 21) {
+    else if (playerScoreOnRow == 21) {
         pointsHave = pointsHave + (pointsWagered * 2)
         let text = `BLACKJACK!  YOU WIN ${pointsWagered*2} POINTS`;
         //top of two messages
