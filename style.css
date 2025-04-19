@@ -1,134 +1,92 @@
 body {
-    min-width: 879px;
+  min-width: 879px;
 }
 
 #container {
-    background-color: whitesmoke;
-    /*display: block;*/
-    max-height: 540px;
-    border: 2px solid rgb(0, 0, 0);
-    height: 85%;
-    width: 80%;
-    text-align: center;
-    border-radius: 4em;
-    box-shadow: 10px 20px 30px rgba(0, 0, 0, .6);
+  background-color: whitesmoke;
+  /*display: block;*/
+  max-height: 540px;
+  border: 2px solid rgb(0, 0, 0);
+  height: 85%;
+  width: 80%;
+  text-align: center;
+  border-radius: 4em;
+  box-shadow: 10px 20px 30px rgba(0, 0, 0, 0.6);
 }
 
 #forFlex {
-    display: flex;
+  display: flex;
 
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
 #headerContainer {
-    display: flex;
-    
-
+  display: flex;
 }
 
 #title {
-    font-size: 30px;
-    margin-left: 119px;
-    margin-bottom: 15px;
-    margin-top: 10px;
+  font-size: 30px;
+  margin-left: 119px;
+  margin-bottom: 15px;
+  margin-top: 10px;
 }
 
 #scoreAtTop {
-    width: 50%;
-    font-size: 30px;
-    color: rgb(255, 72, 0);
-    align-self: center;
+  width: 50%;
+  font-size: 30px;
+  color: rgb(255, 72, 0);
+  align-self: center;
 }
 
-/* for small mobile screen
-#alternateContainer {
-    justify-content: center;
-    align-items: center;
-    display: flex;
-    height: 100vh;
+#canvasDealer {
+  margin-top: 9px;
 }
-    */
-#canvasDealer{
-    margin-top: 9px;
-}
-#drawCardBtnUpper{
-
-    
+#drawCardBtnUpper {
 }
 #messageUnderRow2 {
-    margin-bottom: 10px;
-    font-weight:bold;
+  margin-bottom: 10px;
+  font-weight: bold;
 }
 
-#messageLower{
-    font-weight:bold;
-}
-#containsUpperButtons{
-
-    
+#messageLower {
+  font-weight: bold;
 }
 
-input{
-    font-size:1.2em;
+input {
+  font-size: 1.2em;
 }
 
 #container {
- 
-    background-color: white;
-
-    }
+  background-color: white;
+}
 
 #forFlex {
-   
-   background-color:wh
+  background-color: wh;
 }
 
+@media screen and (min-width: 1062px) {
+  #forFlex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  #flex {
+    display: none;
+  }
 
+  #item {
+    display: none;
+  }
 
+  #alternateContainer {
+    background-color: tomato;
+    display: none;
+  }
 
-
-
-
-
-@media (min-width: 0px) {
-    
-    #container{
-        
-        
-    }
-    
-    
+  #container {
+    max-width: 1024px;
+    background-color: white;
+  }
 }
-
-
-
-/*upper box*/
-@media screen and (min-width: 1062px){
-
-    #forFlex {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-       
-    }
-    #flex {
-        display: none;
-    }
-
-    #item {
-        display: none;
-    }
-
-    #alternateContainer {
-        background-color: tomato;
-        display: none;
-    }
-
-    #container {
-        max-width: 1024px;
-        background-color:white;
-    }
-}
-
