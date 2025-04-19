@@ -107,27 +107,8 @@ async function drawDealerCards() {
         multiplierRow1++;
         let mark = getMarkOfCard();
         //for testin delaers hand.
-        mark = dealersHandPrompt();
-        //for testing, uncomment counterofpresseddealerdrawbtn iterater and ifs.
-        //could also test charlie, for example, by changing first six values.
-         /*
-        if (counterOfPressedDealerDrawBtn == 1) {
-            mark = "A";
-        } else if (counterOfPressedDealerDrawBtn == 2) {
-            mark = "10";
-        } else if (counterOfPressedDealerDrawBtn == 3) {
-            mark = "A";
-        }
-        if (counterOfPressedDealerDrawBtn == 4) {
-            mark = "A";
-        } else if (counterOfPressedDealerDrawBtn == 5) {
-            mark = "2";
-        } else if (counterOfPressedDealerDrawBtn == 6) {
-            mark = "2";
-        } else if (counterOfPressedDealerDrawBtn == 7) {
-            mark = "3";
-        }
-        */
+        //mark = dealersHandPrompt();
+        
         //These are the face cards with a mark of ten.
         if (mark == "Q" || mark == "K" || mark == "J" || mark == "10") {
             mark = "10";
@@ -206,31 +187,9 @@ function drawPlayerCardTop() {
     counterOfPressedUpperDrawBtn++;
     divide.disabled = true;
     multiplierRow2++;
-    //left for any need to test, for testing divide, uncomment first two conditions with tens
-    //and uncomment counterofpressedupperdrawbtn iterator. Also, set value of 10 in first 'if' 
-    //of drawPlayerCardBottom and comment out getmarkofcard() below.
-    //Otherwise, use to try different hands.  Pay attention to getmarkofcard() below.
-    //For regular use, comment out all ifs and uncomment getmarkcards().
-    /*
-    if (counterOfPressedUpperDrawBtn == 1) {
-        mark = "10";
-    } else if (counterOfPressedUpperDrawBtn == 2) {
-        mark = "10";
-    }
-    else if (counterOfPressedUpperDrawBtn == 3) {
-        mark = "A";
-    }
-    else if (counterOfPressedUpperDrawBtn == 4) {
-        mark = "A";
-    } else if (counterOfPressedUpperDrawBtn == 5) {
-        mark = "A";
-    } else if (counterOfPressedUpperDrawBtn == 6) {
-        mark = "5";
-    } 
-    */
-    //else{
+    
     mark = getMarkOfCard();
-    mark = firstHandPrompt();
+    //mark = firstHandPrompt();
     //}
     //Draw the card, graphically.
     ctx2.beginPath();
@@ -326,7 +285,7 @@ let counterOfPressedLowerDrawBtn = 0;
 //Graphical context.
 let ctx3 = canvasPlayerBottomCards.getContext("2d");
 
-//This is the lower row of cards for when two tens are divided: needs to be renamed.
+//This is the lower row of cards for when two tens are divided.
 function drawPlayerCardBottom(mark) {
     //For shuffling.
     totalAllCardsPlayedBeforeShuffle++;
@@ -335,10 +294,10 @@ function drawPlayerCardBottom(mark) {
     numberOfCardsDeltRow3++;
     //isThereASecondDeal = true;
     numberOfIterationsRow3++;
+    //comes from click
     if (mark === "0") {
-        //Gets value of card.
-        //mark = getMarkOfCard();
-        mark = secondHandPrompt();
+        mark = getMarkOfCard();
+        //mark = secondHandPrompt();
     }
     //Left this for any need of testing to set cards with values that take place of mark.
     //For two tens which needs to divide, don't uncomment first 'if' statement.
@@ -397,13 +356,7 @@ function drawPlayerCardBottom(mark) {
         totalCardsDeltRow3++;
         alternateHandForCharlieRow3 = alternateHandForCharlieRow3 + parseInt(mark);
     }
-    //Important logs.
-    console.log("2playerScoreRow2", playerScoreRow2);
-    console.log("2numberOfCardsDeltRow2 ", numberOfCardsDeltRow2);
-    console.log("2numberOfCardsDeltRow3 ", numberOfCardsDeltRow3);
-    console.log("2alternateHandForCharlieRow2", alternateHandForCharlieRow2);
-    console.log("2nc2 ", numberOfCardsDeltRow2);
-    console.log("2nc3 ", numberOfCardsDeltRow3);
+    
     //both hands have two cards and are ready for dealing
     if (numberOfCardsDeltRow2 > 1 && numberOfCardsDeltRow3 > 1) {
         dealCardsBtn.disabled = false;
@@ -426,30 +379,7 @@ function setsUpGame() {
     drawCardBtnUpper.disabled = true;
 }
 
-// 13 x  20 = 260 cards 
-//If indexed value is one, than the card has been used in the next array.
-// let deckUseage = [
-//     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-// ];
+
 deckUseage = new Array(260).fill(0);
 
 
@@ -634,9 +564,7 @@ async function newRound() {
     counterOfPressedUpperDrawBtn = 0;
     counterOfPressedLowerDrawBtn = 0;
     counterOfPressedDealerDrawBtn = 0;
-    //a reminder of starting initialization:
-    //AreThereAcesArrayRow = ["no ace","no ace","no ace","no ace" , "no ace","no ace","no ace","no ace" ,"no ace","no ace","no ace","no ace","no ace","no ace","no ace","no ace","no ace","no ace","no ace","no ace"]; 
-    //Clear aces in array so next ahnd has no useable aces yet.
+    
     for (let i = 0; i < 4 * 5; i++) {
         if (AreThereAcesArrayRow[i] == "is row2 ace" || AreThereAcesArrayRow[i] == "is row3 ace") {
             AreThereAcesArrayRow[i] = "used ace";
@@ -1043,21 +971,21 @@ function checkPlayerRow3ForCompleteness() {
 }
 setsUpGame();
 
-function firstHandPrompt(){
+// function firstHandPrompt(){
 
-    let card = prompt("Enter Users 1st Card:")
-    return card;
-}
-function secondHandPrompt(){
-    let card = prompt("Enter Users 2nd Card:")
-    return card;
+//     let card = prompt("Enter Users 1st Card:")
+//     return card;
+// }
+// function secondHandPrompt(){
+//     let card = prompt("Enter Users 2nd Card:")
+//     return card;
 
-}
-function dealersHandPrompt(){
-    let card = prompt("Enter Dealers Next Card:")
-    return card;
+// }
+// function dealersHandPrompt(){
+//     let card = prompt("Enter Dealers Next Card:")
+//     return card;
 
-}
+// }
 </script>
 </body>
 
