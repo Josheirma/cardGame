@@ -437,10 +437,7 @@ function wager(points_Wagered) {
     pointsWagered = points_Wagered;
     //Makes upper draw button show and make all waging button not showing.
     drawCardBtnUpper.disabled = false;
-    //wagerButtonOne.disabled = true;
-    //wagerButtonFive.disabled = true;
-    //wagerButtonFifteen.disabled = true;
-    //wagerButtonTwentyfive.disabled = true;
+    
     SetAllWagerButtonsToDisabled(true);
 }
 
@@ -491,12 +488,6 @@ async function newRound() {
     document.getElementById('messageLower').textContent = "";
     document.getElementById('messageUnderRow2').textContent = "";
     
-    
-    //Shows wagers.
-    // wagerButtonOne.disabled = false;
-    // wagerButtonFive.disabled = false;
-    // wagerButtonFifteen.disabled = false;
-    // wagerButtonTwentyfive.disabled = false;
     SetAllWagerButtonsToDisabled(false);
     
     
@@ -657,24 +648,15 @@ async function shuffleTheDeck() {
     //Set deck to unused, zero.
     deckUseage = new Array(260).fill(0);
     //Turns off buttons, wait with message, reshow original message, and turn on wager buttons.
-    // wagerButtonOne.disabled = true;
-    // wagerButtonFive.disabled = true;
-    // wagerButtonFifteen.disabled = true;
-    // wagerButtonTwentyfive.disabled = true;
+    
     SetAllWagerButtonsToDisabled(true);
     await new Promise(resolve => setTimeout(resolve, 1500));
-    // wagerButtonOne.disabled = false;
-    // wagerButtonFive.disabled = false;
-    // wagerButtonFifteen.disabled = false;
-    // wagerButtonTwentyfive.disabled = false;
+    
     SetAllWagerButtonsToDisabled(false);
 }
 
 function endGame() {
-    // wagerButtonOne.disabled = true;
-    // wagerButtonFive.disabled = true;
-    // wagerButtonFifteen.disabled = true;
-    // wagerButtonTwentyfive.disabled = true;
+    
     SetAllWagerButtonsToDisabled(true);
     newRoundBtn.disabled = true;
     let text = "You have won the game!";
