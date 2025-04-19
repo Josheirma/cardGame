@@ -231,16 +231,7 @@ function drawPlayerCardTop() {
         numberOfCardsDeltRow2++;
         alternateHandForCharlieRow2 = alternateHandForCharlieRow2 + parseInt(mark);
     }
-    //Important logs for testing.
-    console.log("playerScoreRow2", playerScoreRow2);
-    console.log("numberOfCardsDeltRow2 ", numberOfCardsDeltRow2);
-    console.log("numberOfCardsDeltRow3 ", numberOfCardsDeltRow3);
-    console.log("alternateHandForCharlieRow2", alternateHandForCharlieRow2);
-    console.log("nc2 ", numberOfCardsDeltRow2);
-    console.log("nc3 ", numberOfCardsDeltRow3);
-    console.log("points have", pointsHave);
-    console.log("tc: ", tenCounter);
-    console.log(numberOfCardsDeltRow2);
+    
     //Two cards are dealt and both are ten, with one being displayed in players hand, now.
     //Not enough points to divide hand.
     if ((tenCounter == 2) && (pointsHave < (pointsWagered * 2))) {
@@ -381,32 +372,6 @@ function setsUpGame() {
 
 
 deckUseage = new Array(260).fill(0);
-
-
-//13 x 20 = 260 cards in total.
-// 20 rows
-// let decks = [
-//     "A", "Q", "K", "J", "2", "3", "4", "5", "6", "7", "8", "9", "10",
-//     "A", "Q", "K", "J", "2", "3", "4", "5", "6", "7", "8", "9", "10",
-//     "A", "Q", "K", "J", "2", "3", "4", "5", "6", "7", "8", "9", "10",
-//     "A", "Q", "K", "J", "2", "3", "4", "5", "6", "7", "8", "9", "10",
-//     "A", "Q", "K", "J", "2", "3", "4", "5", "6", "7", "8", "9", "10",
-//     "A", "Q", "K", "J", "2", "3", "4", "5", "6", "7", "8", "9", "10",
-//     "A", "Q", "K", "J", "2", "3", "4", "5", "6", "7", "8", "9", "10",
-//     "A", "Q", "K", "J", "2", "3", "4", "5", "6", "7", "8", "9", "10",
-//     "A", "Q", "K", "J", "2", "3", "4", "5", "6", "7", "8", "9", "10",
-//     "A", "Q", "K", "J", "2", "3", "4", "5", "6", "7", "8", "9", "10",
-//     "A", "Q", "K", "J", "2", "3", "4", "5", "6", "7", "8", "9", "10",
-//     "A", "Q", "K", "J", "2", "3", "4", "5", "6", "7", "8", "9", "10",
-//     "A", "Q", "K", "J", "2", "3", "4", "5", "6", "7", "8", "9", "10",
-//     "A", "Q", "K", "J", "2", "3", "4", "5", "6", "7", "8", "9", "10",
-//     "A", "Q", "K", "J", "2", "3", "4", "5", "6", "7", "8", "9", "10",
-//     "A", "Q", "K", "J", "2", "3", "4", "5", "6", "7", "8", "9", "10",
-//     "A", "Q", "K", "J", "2", "3", "4", "5", "6", "7", "8", "9", "10",
-//     "A", "Q", "K", "J", "2", "3", "4", "5", "6", "7", "8", "9", "10",
-//     "A", "Q", "K", "J", "2", "3", "4", "5", "6", "7", "8", "9", "10",
-//     "A", "Q", "K", "J", "2", "3", "4", "5", "6", "7", "8", "9", "10"
-// ];
 
 let singleDeck = ["A", "Q", "K", "J", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
 let decks = Array.from({ length: 20 }, () => [...singleDeck]).flat();
