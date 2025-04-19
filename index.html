@@ -98,7 +98,7 @@ async function drawDealerCards() {
         multiplierRow1++;
         let mark = getMarkOfCard();
         //for testin delaers hand.
-        //mark = dealersHandPrompt();
+        mark = dealersHandPrompt();
         //These are the face cards with a mark of ten.
         if (mark == "Q" || mark == "K" || mark == "J" || mark == "10") {
             mark = "10";
@@ -172,7 +172,7 @@ function drawPlayerCardTop() {
     divide.disabled = true;
     multiplierRow2++;
     mark = getMarkOfCard();
-    //mark = firstHandPrompt();
+    mark = firstHandPrompt();
     //}
     //Draw the card, graphically.
     ctx2.beginPath();
@@ -271,7 +271,7 @@ function drawPlayerCardBottom(mark) {
     //comes from click
     if (mark === "0") {
         mark = getMarkOfCard();
-        //mark = secondHandPrompt();
+        mark = secondHandPrompt();
     }
     //Left this for any need of testing to set cards with values that take place of mark.
     //For two tens which needs to divide, don't uncomment first 'if' statement.
@@ -867,22 +867,22 @@ function checkPlayerRow3ForCompleteness() {
 setsUpGame();
 
 
-// function firstHandPrompt(){
-//     let card = prompt("Enter Users 1st Card:")
-//     return card;
-// }
+function firstHandPrompt(){
+    let card = prompt("Enter Users 1st Card:")
+    return card;
+}
 
 
-// function secondHandPrompt(){
-//     let card = prompt("Enter Users 2nd Card:")
-//     return card;
-// }
+function secondHandPrompt(){
+    let card = prompt("Enter Users 2nd Card:")
+    return card;
+}
 
 
-// function dealersHandPrompt(){
-//     let card = prompt("Enter Dealers Next Card:")
-//     return card;
-// }
+function dealersHandPrompt(){
+    let card = prompt("Enter Dealers Next Card:")
+    return card;
+}
 
 </script>
 </body>
