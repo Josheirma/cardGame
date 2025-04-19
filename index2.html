@@ -572,39 +572,6 @@ function checkEndOfHands() {
     SetAllWagerButtonsToDisabled(false)
 }
 
-// //Changes buttons depending on if either flag was set for player blackjack, player bust, or player five card charlie.
-// function checkEndOfHands() {
-//     //Was a divide.
-//     if (isThereASecondDeal) {
-//         //Second time through this will be true.
-//         if (FirstDealIsDoneFlag && SecondDealIsDoneFlag) {
-//             newRoundBtn.disabled = false;
-//             drawCardBtnLower.disabled = true;
-//             drawCardBtnUpper.disabled = true;
-//             dealCardsBtn.disabled = true;
-//         }
-//         //First player hand complete before seconddealisdoneflag.
-//         else if (FirstDealIsDoneFlag) {
-//             drawCardBtnUpper.disabled = true;
-//             drawCardBtnLower.disabled = false;
-//         }
-//         //Second player hand completed before firstdealisdoneflag.
-//         else if (SecondDealIsDoneFlag) {
-//             //upper button shows
-//             drawCardBtnUpper.disabled = false;
-//             //bottom button doesnt show
-//             drawCardBtnLower.disabled = true;
-//         }
-//     }
-//     //Only one deal, not row 3 (divided deal)
-//     else if (!isThereASecondDeal) {
-//         if (FirstDealIsDoneFlag == true) {
-//             drawCardBtnUpper.disabled = true;
-//             newRoundBtn.disabled = false;
-//             dealCardsBtn.disabled = true;
-//         }
-//     }
-// }
 
 //Changes buttons depending on if either flag was set for player blackjack, player bust, or player five card charlie.
 //this is called when either players hand is complete, before deal button is pressed.
