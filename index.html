@@ -65,8 +65,8 @@ let multiplierRow1 = -1;
 const INITIALROW = 84;
 let dealerHandTotal = 0;
 let isAllDelt = false;
-let playerScoreOnRow = 0;
-let playerScoreRow3 = 0;
+let playerScoreTopRow = 0;
+let playerScoreBottomRow = 0;
 let FirstDealIsDoneFlag = false;
 let SecondDealIsDoneFlag = false;
 let AreThereAcesArrayRow = Array(20).fill("no ace");
@@ -194,7 +194,7 @@ function drawPlayerCardTop() {
         if (numberOfCardsDeltRow2 == 1 || numberOfCardsDeltRow2 == 2) {
             tenCounter++;
         }
-        playerScoreOnRow = playerScoreOnRow + 10;
+        playerScoreTopRow = playerScoreTopRow + 10;
         alternateHandForCharlieRow2 = alternateHandForCharlieRow2 + 10;
     }
     //ace
@@ -202,15 +202,15 @@ function drawPlayerCardTop() {
         numberOfCardsDeltRow2++;
         counterAcesRow = counterAcesRow + 1;
         //Can be changed to a one value later.
-        playerScoreOnRow = playerScoreOnRow + 11;
+        playerScoreTopRow = playerScoreTopRow + 11;
         //Sets this to allow changing an ace to one in row two. 
-        AreThereAcesArrayRow[counterAcesRow] = "is row2 ace";
+        AreThereAcesArrayRow[counterAcesRow] = "is top row ace";
         //Charlie counts aces as one, not eleven.  Charlie is a hand with five cards that wins.
         alternateHandForCharlieRow2 = alternateHandForCharlieRow2 + 1;
     }
     //Number cards two through nine, no one, because one is an ace.
     else {
-        playerScoreOnRow = playerScoreOnRow + parseInt(mark);
+        playerScoreTopRow = playerScoreTopRow + parseInt(mark);
         numberOfCardsDeltRow2++;
         alternateHandForCharlieRow2 = alternateHandForCharlieRow2 + parseInt(mark);
     }
@@ -311,22 +311,22 @@ function drawPlayerCardBottom(mark) {
     if (mark == "Q" || mark == "K" || mark == "J" || mark == "10") {
         mark = "10";
         totalCardsDeltRow3++;
-        playerScoreRow3 = playerScoreRow3 + 10;
+        playerScoreBottomRow = playerScoreBottomRow + 10;
         alternateHandForCharlieRow3 = alternateHandForCharlieRow3 + 10;
     }
     //An ace.
     else if (mark == "A") {
         totalCardsDeltRow3++;
         counterAcesRow = counterAcesRow + 1;
-        playerScoreRow3 = playerScoreRow3 + 11;
+        playerScoreBottomRow = playerScoreBottomRow + 11;
         //Holds aces in array for row3
-        AreThereAcesArrayRow[counterAcesRow] = "is row3 ace";
+        AreThereAcesArrayRow[counterAcesRow] = "is bottom row ace";
         //Value of hand with all aces counted as 1 to win with five cards.
         alternateHandForCharlieRow3 = alternateHandForCharlieRow3 + 1;
     }
     //number two through nine, one is not counted because it is an ace.
     else {
-        playerScoreRow3 = playerScoreRow3 + parseInt(mark);
+        playerScoreBottomRow = playerScoreBottomRow + parseInt(mark);
         totalCardsDeltRow3++;
         alternateHandForCharlieRow3 = alternateHandForCharlieRow3 + parseInt(mark);
     }
@@ -435,7 +435,7 @@ function onDivideHand() {
     //Erases second card of row two, a ten!
     //Canvas is zero to fifty-one, this is a width of fifty-two.
     ctx2.clearRect(INITIALROW + (CARDGAP) - 1, 0, 52, 78);
-    playerScoreOnRow = playerScoreOnRow - 10;
+    playerScoreTopRow = playerScoreTopRow - 10;
 }
 
 
@@ -474,8 +474,8 @@ async function newRound() {
     dealerHandTotal = 0;
     isAllDelt = false;
     //Reset rounds' scores.
-    playerScoreOnRow = 0;
-    playerScoreRow3 = 0;
+    playerScoreTopRow = 0;
+    playerScoreBottomRow = 0;
     //@
     pointsWagered = 0;
     //For spacing cards.
@@ -500,7 +500,7 @@ async function newRound() {
     counterOfPressedLowerDrawBtn = 0;
     counterOfPressedDealerDrawBtn = 0;
     for (let i = 0; i < 4 * 5; i++) {
-        if (AreThereAcesArrayRow[i] == "is row2 ace" || AreThereAcesArrayRow[i] == "is row3 ace") {
+        if (AreThereAcesArrayRow[i] == "is top row ace" || AreThereAcesArrayRow[i] == "is bottom row ace") {
             AreThereAcesArrayRow[i] = "used ace";
         }
     }
@@ -633,9 +633,9 @@ function checkSecondHandForDealer() {
             SecondDealIsDoneFlag = true;
            checkEndOfHands();
         }
-        //Playerscorerow3 will be under 21 , because would have already blackjacked without dealer's deal.
+        //playerScoreBottomRow will be under 21 , because would have already blackjacked without dealer's deal.
         //Player wins by points
-        else if (playerScoreRow3 > dealerHandTotal) {
+        else if (playerScoreBottomRow > dealerHandTotal) {
             //PLAYER WINS
             pointsHave = pointsHave + (pointsWagered);
             let text = "";
@@ -652,7 +652,7 @@ function checkSecondHandForDealer() {
         }
         //Already checked dealer hand greater than 21, so this score means dealer wins by tie or better score
         //both player and dealer deals are less than 21.
-        else if (playerScoreRow3 <= dealerHandTotal) {
+        else if (playerScoreBottomRow <= dealerHandTotal) {
             //DEALER WINS
             pointsHave = pointsHave - (pointsWagered);
             if (pointsHave < 0) {
@@ -695,7 +695,7 @@ function checkFirstHandForDealer() {
             checkEndOfHands();
         }
         //Already checked dealer for blackjack, therefor is less than 21 and has more points than player
-        else if (dealerHandTotal >= playerScoreOnRow) {
+        else if (dealerHandTotal >= playerScoreTopRow) {
             //DEALER WINS
             pointsHave = pointsHave - pointsWagered;
             if (pointsHave < 0) {
@@ -716,7 +716,7 @@ function checkFirstHandForDealer() {
         }
         //player is under 21, because didn't score blackjack before cards dealt (wouldn't be here.)
         //Dealer is less than 21 too, and player wins by points over dealer.
-        else if (dealerHandTotal < playerScoreOnRow) {
+        else if (dealerHandTotal < playerScoreTopRow) {
             //PLAYER WINS       
             pointsHave = pointsHave + pointsWagered;
             let text = "";
@@ -740,18 +740,18 @@ function checkFirstHandForDealer() {
 function checkPlayerTopRowForCompleteness() {
     //If there is an ace and deal is over 21 change next ace to a one.
     //@@
-    if (playerScoreOnRow > 21) {
+    if (playerScoreTopRow > 21) {
         for (let i = 0; i < AMTOFCARDS; i++) {
-            if (AreThereAcesArrayRow[i] == "is row2 ace") {
+            if (AreThereAcesArrayRow[i] == "is top row ace") {
                 AreThereAcesArrayRow[i] = "used ace";
-                playerScoreOnRow = playerScoreOnRow - 10;
+                playerScoreTopRow = playerScoreTopRow - 10;
                 break;
             }
         }
     }
-    console.log("3:", playerScoreOnRow);
+    console.log("3:", playerScoreTopRow);
     //Player scores over 21, so busts.
-    if (playerScoreOnRow > 21) {
+    if (playerScoreTopRow > 21) {
         pointsHave = pointsHave - pointsWagered;
         if (pointsHave < 0) {
             pointsHave = 0;
@@ -771,7 +771,7 @@ function checkPlayerTopRowForCompleteness() {
         checkEndOfHands();
     }
     //Player scores blackjack.
-    else if (playerScoreOnRow == 21) {
+    else if (playerScoreTopRow == 21) {
         pointsHave = pointsHave + (pointsWagered * 2)
         let text = `BLACKJACK!  YOU WIN ${pointsWagered*2} POINTS`;
         //top of two messages
@@ -805,18 +805,18 @@ function checkPlayerTopRowForCompleteness() {
 
 function checkPlayerBottomRowForCompleteness() {
     //Check if hand has any aces, and because the hand is over twenty-one, change eleven value to one. 
-    if (playerScoreRow3 > 21) {
+    if (playerScoreBottomRow > 21) {
         for (let i = 0; i < AMTOFCARDS; i++) {
-            if (AreThereAcesArrayRow[i] == "is row3 ace") {
+            if (AreThereAcesArrayRow[i] == "is bottom row ace") {
                 AreThereAcesArrayRow[i] = "used ace";
-                playerScoreRow3 = playerScoreRow3 - 10;
+                playerScoreBottomRow = playerScoreBottomRow - 10;
                 break;
             }
         }
     }
-    console.log("playerScoreRow3a", playerScoreRow3);
+    console.log("playerScoreBottomRowa", playerScoreBottomRow);
     //Player scores over twenty-one, so player busts and loses.
-    if (playerScoreRow3 > 21) {
+    if (playerScoreBottomRow > 21) {
         pointsHave = pointsHave - pointsWagered;
         if (pointsHave < 0) {
             pointsHave = 0;
@@ -836,7 +836,7 @@ function checkPlayerBottomRowForCompleteness() {
         checkEndOfHands();
     }
     //player scores over twenty-one, so player busts and player loses.
-    else if (playerScoreRow3 == 21) {
+    else if (playerScoreBottomRow == 21) {
         //Score
         pointsHave = pointsHave + (pointsWagered * 2);
         let text = `BLACKJACK!  YOU WIN ${pointsWagered*2} POINTS`;
