@@ -476,6 +476,7 @@ async function newRound() {
     //Reset rounds' scores.
     playerScoreOnRow = 0;
     playerScoreRow3 = 0;
+    //@
     pointsWagered = 0;
     //For spacing cards.
     multiplierRow2 = -1;
@@ -673,7 +674,7 @@ function checkSecondHandForDealer() {
     return (1);
 }
 
-
+//ok
 function checkFirstHandForDealer() {
     //player didn't bust, charlie, or blackjack, and still is a first deal that hasn't been completed yet.
     if (FirstDealIsDoneFlag == false) {
@@ -735,9 +736,10 @@ function checkFirstHandForDealer() {
     return (1);
 }
 
-
+//@
 function checkPlayerTopRowForCompleteness() {
     //If there is an ace and deal is over 21 change next ace to a one.
+    //@@
     if (playerScoreOnRow > 21) {
         for (let i = 0; i < AMTOFCARDS; i++) {
             if (AreThereAcesArrayRow[i] == "is row2 ace") {
