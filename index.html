@@ -238,7 +238,7 @@ function drawPlayerCardTop() {
     else if (numberOfCardsDeltRow2 > 1 && numberOfCardsDeltRow3 > 1) {
         dealCardsBtn.disabled = false;
     }
-    checkPlayerRow2ForCompleteness();
+    checkPlayerTopRowForCompleteness();
     //Size of mark needs to be centered on card.  One is smaller with more space, so left adjustment is needed. 
     if (mark == "10") {
         ctx2.fillText(mark, (INITIALROW) + (multiplierRow2 * CARDGAP) - 5, 57);
@@ -334,7 +334,7 @@ function drawPlayerCardBottom(mark) {
     if (numberOfCardsDeltRow2 > 1 && numberOfCardsDeltRow3 > 1) {
         dealCardsBtn.disabled = false;
     }
-    checkPlayerRow3ForCompleteness();
+    checkPlayerBottomRowForCompleteness();
     //different fit on ten card when one is used, because it has more space on left and right,
     //so a left adjustment is needed.
     if (mark == "10") {
@@ -736,7 +736,7 @@ function checkFirstHandForDealer() {
 }
 
 
-function checkPlayerRow2ForCompleteness() {
+function checkPlayerTopRowForCompleteness() {
     //If there is an ace and deal is over 21 change next ace to a one.
     if (playerScoreOnRow > 21) {
         for (let i = 0; i < AMTOFCARDS; i++) {
@@ -801,7 +801,7 @@ function checkPlayerRow2ForCompleteness() {
 }
 
 
-function checkPlayerRow3ForCompleteness() {
+function checkPlayerBottomRowForCompleteness() {
     //Check if hand has any aces, and because the hand is over twenty-one, change eleven value to one. 
     if (playerScoreRow3 > 21) {
         for (let i = 0; i < AMTOFCARDS; i++) {
