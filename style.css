@@ -45,6 +45,10 @@ body {
 }
 #drawCardBtnUpper {
 }
+
+#messageUnderTopRow{
+  font-weight: bold;
+}
 #messageUnderRow2 {
   margin-bottom: 10px;
   font-weight: bold;
