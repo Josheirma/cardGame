@@ -476,8 +476,6 @@ async function newRound() {
     //Reset rounds' scores.
     playerScoreTopRow = 0;
     playerScoreBottomRow = 0;
-    //@
-    pointsWagered = 0;
     //For spacing cards.
     multiplierTopRow = -1;
     counterAcesRow = -1;
@@ -614,7 +612,7 @@ function checkSecondHandForDealer() {
     //If true, check cards for bust, charlie, or blackjacke.  Isn't a division (divide of tens) 
     //to make two deals instead of one. There are at least two cards.  This function may be
     //called with first or second player hand already completed, so checks here.
-    //@@
+   
     if (SecondDealIsDoneFlag == false && isThereASecondDeal) {
         //bust
         if (dealerHandTotal > 21) {
@@ -736,10 +734,10 @@ function checkFirstHandForDealer() {
     return (1);
 }
 
-//@
+
 function checkPlayerTopRowForCompleteness() {
     //If there is an ace and deal is over 21 change next ace to a one.
-    //@@
+    //if there is an ace, than reduce the score by ten.  because eleven becomes 1.
     if (playerScoreTopRow > 21) {
         for (let i = 0; i < AMTOFCARDS; i++) {
             if (AreThereAcesArrayRow[i] == "is top row ace") {
