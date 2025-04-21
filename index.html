@@ -231,11 +231,11 @@ function drawPlayerCardTop() {
         divide.disabled = true;
     }
     //There is no divide and two cards have been played.
-    if (numberOfCardsDeltTopRow == 2 && numberOfCardsDeltRow3 == 0) {
+    if (numberOfCardsDeltTopRow == 2 && numberOfCardsDeltBottomRow == 0) {
         dealCardsBtn.disabled = false;
     }
     //Both deals have two or more cards.
-    else if (numberOfCardsDeltTopRow > 1 && numberOfCardsDeltRow3 > 1) {
+    else if (numberOfCardsDeltTopRow > 1 && numberOfCardsDeltBottomRow > 1) {
         dealCardsBtn.disabled = false;
     }
     checkPlayerTopRowForCompleteness();
@@ -248,12 +248,12 @@ function drawPlayerCardTop() {
     }
 }
 //Controls the spacing of the cards.
-let multiplierRow3 = -1;
-let totalCardsDeltRow3 = 0;
-let numberOfIterationsRow3 = 0;
-let numberOfCardsDeltRow3 = 0;
+let multiplierBottomRow = -1;
+let totalCardsDeltBottomRow = 0;
+let numberOfIterationsBottomRow = 0;
+let numberOfCardsDeltBottomRow = 0;
 //Aces are counted as one, always.
-let alternateHandForCharlieRow3 = 0;
+let alternateHandForCharlieBottomRow = 0;
 let counterOfPressedLowerDrawBtn = 0;
 //Graphical context.
 let ctx3 = canvasPlayerBottomCards.getContext("2d");
@@ -265,9 +265,9 @@ function drawPlayerCardBottom(mark) {
     totalAllCardsPlayedBeforeShuffle++;
     //used for debugging differen set marks
     counterOfPressedLowerDrawBtn++;
-    numberOfCardsDeltRow3++;
+    numberOfCardsDeltBottomRow++;
     //isThereASecondDeal = true;
-    numberOfIterationsRow3++;
+    numberOfIterationsBottomRow++;
     //comes from click
     if (mark === "0") {
         mark = getMarkOfCard();
@@ -298,50 +298,50 @@ function drawPlayerCardBottom(mark) {
     document.getElementById('messageLower').style.visibility = 'visible';
     document.getElementById('canvasPlayerBottomCards').style.visibility = 'visible';
     drawCardBtnLower.disabled = false;
-    multiplierRow3++;
+    multiplierBottomRow++;
     //Graphic context
     ctx3 = canvasPlayerBottomCards.getContext("2d");
     //graphically draws card
     ctx3.beginPath();
     ctx3.fillStyle = 'blue';
-    ctx3.rect((INITIALROW) + multiplierRow3 * CARDGAP, 7, 50, 64);
+    ctx3.rect((INITIALROW) + multiplierBottomRow * CARDGAP, 7, 50, 64);
     ctx3.stroke();
     ctx3.font = "50px Arial";
     //A ten value queen, king, jack, or ten. 
     if (mark == "Q" || mark == "K" || mark == "J" || mark == "10") {
         mark = "10";
-        totalCardsDeltRow3++;
+        totalCardsDeltBottomRow++;
         playerScoreBottomRow = playerScoreBottomRow + 10;
-        alternateHandForCharlieRow3 = alternateHandForCharlieRow3 + 10;
+        alternateHandForCharlieBottomRow = alternateHandForCharlieBottomRow + 10;
     }
     //An ace.
     else if (mark == "A") {
-        totalCardsDeltRow3++;
+        totalCardsDeltBottomRow++;
         counterAcesRow = counterAcesRow + 1;
         playerScoreBottomRow = playerScoreBottomRow + 11;
-        //Holds aces in array for row3
+        //Holds aces in array for BottomRow
         AreThereAcesArrayRow[counterAcesRow] = "is bottom row ace";
         //Value of hand with all aces counted as 1 to win with five cards.
-        alternateHandForCharlieRow3 = alternateHandForCharlieRow3 + 1;
+        alternateHandForCharlieBottomRow = alternateHandForCharlieBottomRow + 1;
     }
     //number two through nine, one is not counted because it is an ace.
     else {
         playerScoreBottomRow = playerScoreBottomRow + parseInt(mark);
-        totalCardsDeltRow3++;
-        alternateHandForCharlieRow3 = alternateHandForCharlieRow3 + parseInt(mark);
+        totalCardsDeltBottomRow++;
+        alternateHandForCharlieBottomRow = alternateHandForCharlieBottomRow + parseInt(mark);
     }
     //both hands have two cards and are ready for dealing
-    if (numberOfCardsDeltTopRow > 1 && numberOfCardsDeltRow3 > 1) {
+    if (numberOfCardsDeltTopRow > 1 && numberOfCardsDeltBottomRow > 1) {
         dealCardsBtn.disabled = false;
     }
     checkPlayerBottomRowForCompleteness();
     //different fit on ten card when one is used, because it has more space on left and right,
     //so a left adjustment is needed.
     if (mark == "10") {
-        ctx3.fillText(mark, INITIALROW + (multiplierRow3 * CARDGAP) - 5, 57);
+        ctx3.fillText(mark, INITIALROW + (multiplierBottomRow * CARDGAP) - 5, 57);
     } else {
         //Move non ten one digit graphic, right.
-        ctx3.fillText(mark, INITIALROW + (multiplierRow3 * CARDGAP) + 11, 57);
+        ctx3.fillText(mark, INITIALROW + (multiplierBottomRow * CARDGAP) + 11, 57);
     }
 }
 
@@ -446,7 +446,7 @@ async function newRound() {
         return (-1);
     }
     numberOfCardsDeltTopRow = 0;
-    numberOfCardsDeltRow3 = 0;
+    numberOfCardsDeltBottomRow = 0;
     if (pointsHave <= 0) {
         let text = "Out of points, resetting game!"
         document.getElementById('title').textContent = text;
@@ -483,15 +483,15 @@ async function newRound() {
     counterAcesRow = -1;
     isThereASecondDeal = false;
     //For spacing cards in divided row.
-    multiplierRow3 = -1;
-    totalCardsDeltRow3 = 0;
-    numberOfIterationsRow3 = 0;
+    multiplierBottomRow = -1;
+    totalCardsDeltBottomRow = 0;
+    numberOfIterationsBottomRow = 0;
     counterAcesRow = 0;
     FirstDealIsDoneFlag = false;
     SecondDealIsDoneFlag = false;
     //summed score with aces equal to one, five cards under 21 wins.
     alternateHandForCharlieTopRow = 0;
-    alternateHandForCharlieRow3 = 0;
+    alternateHandForCharlieBottomRow = 0;
     IsADivideFlag = false;
     //When this is equal to two, a divide took place.
     tenCounter = 0;
@@ -848,7 +848,7 @@ function checkPlayerBottomRowForCompleteness() {
         checkEndOfHands();
     }
     //Hand wins becaues it is five cards and is under twenty-one.
-    else if (alternateHandForCharlieRow3 < 22 && numberOfCardsDeltRow3 == 5) {
+    else if (alternateHandForCharlieBottomRow < 22 && numberOfCardsDeltBottomRow == 5) {
         console.log("5 Card Charlie");
         pointsHave = pointsHave + (pointsWagered * 2);
         let text = "";
