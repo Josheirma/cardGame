@@ -362,42 +362,38 @@ let decks = Array.from({ length: 20 }, () => [...singleDeck]).flat();
     document.getElementById('title').textContent = text;
 
 
-//Finds a card as long as at least one card remains (shuffle resets deck when over half way of cards have been dealt.)
-function getMarkOfCard() {
-    //Used to determine direction of search for a card (forward or reverse)
+    function getMarkOfCard() {
     let flagFoundCard = false;
-    let randomNumber = new Math.seedrandom();
-    let index = 0;
-    //Random number is between zero and one.
-    randomNumber = randomNumber();
-    //Changes value to zero through two-hundred-fifty-nine.
-    let betweenZeroand259 = randomNumber * 259;
-    //Removes decimal part of number.
-    index = Math.trunc(betweenZeroand259);
-    //if card is available value use it, otherwise search towards zero for the first available card.
-    let i = 0;
-    if (deckUseage[index] == 0) {
+    let randomNumber = new Math.seedrandom(); // Assumes Math.seedrandom is already seeded elsewhere
+    let index = Math.trunc(randomNumber() * 259); // Get an integer between 0 and 258
+
+    // If the selected card is unused
+    if (deckUseage[index] === 0) {
         deckUseage[index] = 1;
-        return (decks[index]);
+        return decks[index];
     } else {
-        for (i = index; i >= 0; i--) {
-            if (deckUseage[i] == 0) {
+        // Search backwards for the first available card
+        for (let i = index; i >= 0; i--) {
+            if (deckUseage[i] === 0) {
                 deckUseage[i] = 1;
-                flagFounCard = true;
-                break;
+                flagFoundCard = true;
+                return decks[i];
             }
         }
-        //Didn't find card, search incrementally, for next available card.
-        if (flagFoundCard == false) {
-            for (i = index + 1; i < AMTOFCARDS; i++) {
-                if (deckUseage[i] = 0) {
+
+        // If not found, search forward
+        if (!flagFoundCard) {
+            for (let i = index + 1; i < AMTOFCARDS; i++) {
+                if (deckUseage[i] === 0) {
                     deckUseage[i] = 1;
-                    break;
+                    return decks[i];
                 }
             }
         }
     }
-    return (decks[i]);
+
+    // If all cards are used, optionally return null or throw an error
+    return null;
 }
 
 
