@@ -363,38 +363,35 @@ let decks = Array.from({ length: 20 }, () => [...singleDeck]).flat();
 
 
     function getMarkOfCard() {
-    let flagFoundCard = false;
-    let randomNumber = new Math.seedrandom(); // Assumes Math.seedrandom is already seeded elsewhere
-    let index = Math.trunc(randomNumber() * 259); // Get an integer between 0 and 258
+    const random = new Math.seedrandom(); // Already seeded
+    const index = Math.trunc(random() * 259); // Range: 0 to 258
 
-    // If the selected card is unused
+    // Try the random index first
     if (deckUseage[index] === 0) {
         deckUseage[index] = 1;
         return decks[index];
-    } else {
-        // Search backwards for the first available card
-        for (let i = index; i >= 0; i--) {
-            if (deckUseage[i] === 0) {
-                deckUseage[i] = 1;
-                flagFoundCard = true;
-                return decks[i];
-            }
-        }
+    }
 
-        // If not found, search forward
-        if (!flagFoundCard) {
-            for (let i = index + 1; i < AMTOFCARDS; i++) {
-                if (deckUseage[i] === 0) {
-                    deckUseage[i] = 1;
-                    return decks[i];
-                }
-            }
+    // Search backward from index
+    for (let i = index - 1; i >= 0; i--) {
+        if (deckUseage[i] === 0) {
+            deckUseage[i] = 1;
+            return decks[i];
         }
     }
 
-    // If all cards are used, optionally return null or throw an error
+    // Search forward from index + 1
+    for (let i = index + 1; i < AMTOFCARDS; i++) {
+        if (deckUseage[i] === 0) {
+            deckUseage[i] = 1;
+            return decks[i];
+        }
+    }
+
+    // No cards available
     return null;
 }
+rferar
 
 
 function SetAllWagerButtonsToDisabled(visibleflagisdisabled){
