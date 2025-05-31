@@ -98,7 +98,7 @@ async function drawDealerCards() {
         multiplierRow1++;
         let mark = getMarkOfCard();
         //for testin delaers hand.
-        //mark = dealersHandPrompt();
+        
         //These are the face cards with a mark of ten.
         if (mark == "Q" || mark == "K" || mark == "J" || mark == "10") {
             mark = "10";
@@ -135,8 +135,10 @@ async function drawDealerCards() {
         //used to continue with game
         newRoundBtn.disabled = false;
     }
-    checkSecondHandForDealer();
-    checkFirstHandForDealer();
+    //delaers hand is delt
+    checkFirstHandWithDealer();
+    checkSecondHandWithDealer();
+    
     //////////////
     isAllDelt = true;
     multiplierRow1 = -1;
@@ -172,8 +174,7 @@ function drawPlayerCardTop() {
     divide.disabled = true;
     multiplierTopRow++;
     mark = getMarkOfCard();
-    //mark = firstHandPrompt();
-    //}
+    
     //Draw the card, graphically.
     ctx2.beginPath();
     ctx2.fillStyle = 'blue';
@@ -238,6 +239,7 @@ function drawPlayerCardTop() {
     else if (numberOfCardsDeltTopRow > 1 && numberOfCardsDeltBottomRow > 1) {
         dealCardsBtn.disabled = false;
     }
+    //all about players hand, checks players outcome (blackjack, charley, bust, etc...)
     checkPlayerTopRowForCompleteness();
     //Size of mark needs to be centered on card.  One is smaller with more space, so left adjustment is needed. 
     if (mark == "10") {
@@ -272,7 +274,7 @@ function drawPlayerCardBottom(mark) {
     //comes from click
     if (mark === "0") {
         mark = getMarkOfCard();
-        //mark = secondHandPrompt();
+        
     }
     //Left this for any need of testing to set cards with values that take place of mark.
     //For two tens which needs to divide, don't uncomment first 'if' statement.
@@ -299,6 +301,7 @@ function drawPlayerCardBottom(mark) {
     document.getElementById('messageLower').style.visibility = 'visible';
     document.getElementById('canvasPlayerBottomCards').style.visibility = 'visible';
     drawCardBtnLower.disabled = false;
+    
     multiplierBottomRow++;
     //Graphic context
     ctx3 = canvasPlayerBottomCards.getContext("2d");
@@ -349,24 +352,30 @@ function drawPlayerCardBottom(mark) {
 
 
 //On start, these buttons are disabled (wage buttons will be false (not disabled))
+
 function setsUpGame() {
     newRoundBtn.disabled = true;
     drawCardBtnUpper.disabled = true;
     dealCardsBtn.disabled = true;
     drawCardBtnUpper.disabled = true;
 }
+
+//20 decks
 deckUseage = new Array(260).fill(0);
+//20 decks, one super array
 let singleDeck = ["A", "Q", "K", "J", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
+//one super array of all 20 decks
 let decks = Array.from({ length: 20 }, () => [...singleDeck]).flat();
     let text = "BLACKJACK 5 card dealer";
     document.getElementById('title').textContent = text;
 
-
+    // chooses a card that is remaining in the decks
     function getMarkOfCard() {
     const random = new Math.seedrandom(); // Already seeded
     const index = Math.trunc(random() * 259); // Range: 0 to 258
 
-    // Try the random index first
+
+    // Try the random index first, if isn't avaliable search backwards and then forwards in array
     if (deckUseage[index] === 0) {
         deckUseage[index] = 1;
         return decks[index];
@@ -391,7 +400,7 @@ let decks = Array.from({ length: 20 }, () => [...singleDeck]).flat();
     // No cards available
     return null;
 }
-rferar
+
 
 
 function SetAllWagerButtonsToDisabled(visibleflagisdisabled){
@@ -408,6 +417,7 @@ function wager(points_Wagered) {
     if (points_Wagered > pointsHave) {
         return (1);
     }
+    
     pointsWagered = points_Wagered;
     //Makes upper draw button show and make all waging button not showing.
     drawCardBtnUpper.disabled = false;
@@ -425,6 +435,7 @@ function onDivideHand() {
     drawCardBtnLower.disabled = false;
     isThereASecondDeal = true;
     //For drawing both decks when divide button was pressed
+    //hand divides, so 10 is placed on players extra hand
     drawPlayerCardBottom("10");
     multiplierTopRow--;
     //Erases second card of row two, a ten!
@@ -450,8 +461,9 @@ async function newRound() {
             setTimeout(noPoints, 2000);
         });
         pointsHave = AMOUNT_OF_STARTING_POINTS;
-        text = "BLACKJACK 5 card dealer";
-        document.getElementById('title').textContent = text;
+        //@
+        //text = "BLACKJACK 6 card dealer";
+        //document.getElementById('title').textContent = text;
         document.getElementById('scoreAtTop').textContent = pointsHave;
     }
     //Clears all three canvases, sixty-four height with eight vertical offset because 
@@ -464,6 +476,8 @@ async function newRound() {
     document.getElementById('messageLower').textContent = "";
     document.getElementById('messageUnderTopRow').textContent = "";
     SetAllWagerButtonsToDisabled(false);
+    
+    //reset all values
     //For spacing cards.
     multiplierRow1 = -1;
     dealerHandTotal = 0;
@@ -492,9 +506,11 @@ async function newRound() {
     counterOfPressedUpperDrawBtn = 0;
     counterOfPressedLowerDrawBtn = 0;
     counterOfPressedDealerDrawBtn = 0;
+    //amount of aces
     for (let i = 0; i < 4 * 5; i++) {
+        //consolidating ace value
         if (AreThereAcesArrayRow[i] == "is top row ace" || AreThereAcesArrayRow[i] == "is bottom row ace") {
-            AreThereAcesArrayRow[i] = "used ace";
+         AreThereAcesArrayRow[i] = "used ace";
         }
     }
     //If over half the cards played than shuffle the deck (reset it.)
@@ -603,7 +619,7 @@ function endGame() {
 }
 
 
-function checkSecondHandForDealer() {
+function checkSecondHandWithDealer() {
     //If true, check cards for bust, charlie, or blackjacke.  Isn't a division (divide of tens) 
     //to make two deals instead of one. There are at least two cards.  This function may be
     //called with first or second player hand already completed, so checks here.
@@ -615,6 +631,7 @@ function checkSecondHandForDealer() {
             pointsHave = pointsHave + (pointsWagered);
             let text = "";
             //plural usage for text
+            //check for plural word
             if (pointsWagered > 1) {
                 text = `BUST!  YOU WIN ${pointsWagered} POINTS`;
             } else {
@@ -632,6 +649,7 @@ function checkSecondHandForDealer() {
             //PLAYER WINS
             pointsHave = pointsHave + (pointsWagered);
             let text = "";
+            //check for plural word
             if (pointsWagered > 1) {
                 text = `YOU WIN ${pointsWagered} POINTS`;
             } else {
@@ -648,10 +666,12 @@ function checkSecondHandForDealer() {
         else if (playerScoreBottomRow <= dealerHandTotal) {
             //DEALER WINS
             pointsHave = pointsHave - (pointsWagered);
+            //this function is called second after checkfirsthandwithdealer, and there was a split, so will deduct twice more than what was wagered that could cause a negative balance that we turn to zero. 
             if (pointsHave < 0) {
                 pointsHave = 0;
             }
             let text = "";
+            //check for plural word
             if (pointsWagered > 1) {
                 text = `YOU LOSE ${pointsWagered} POINTS`;
             } else {
@@ -667,14 +687,15 @@ function checkSecondHandForDealer() {
     return (1);
 }
 
-//ok
-function checkFirstHandForDealer() {
-    //player didn't bust, charlie, or blackjack, and still is a first deal that hasn't been completed yet.
+//this is okay, called first before: checksecondhandwithdealer, is called when dealers hand has been fully delt
+function checkFirstHandWithDealer() {
+    //aborts call, determination already made.
     if (FirstDealIsDoneFlag == false) {
         if (dealerHandTotal > 21) {
             //DEALER BUSTS
             pointsHave = pointsHave + pointsWagered;
             let text = "";
+            //check for plural word
             if (pointsWagered > 1) {
                 text = `BUST!  YOU WIN ${pointsWagered} POINTS`;
             } else {
@@ -687,14 +708,17 @@ function checkFirstHandForDealer() {
             FirstDealIsDoneFlag = true;
             checkEndOfHands();
         }
-        //Already checked dealer for blackjack, therefor is less than 21 and has more points than player
+        
+        //Already checked dealer for bust (above), therefor is less than or equal to 21 and is better than player
         else if (dealerHandTotal >= playerScoreTopRow) {
             //DEALER WINS
             pointsHave = pointsHave - pointsWagered;
-            if (pointsHave < 0) {
-                pointsHave = 0;
-            }
+            //First hand is called first, so just the original wager is deducted from the points (won't be less than zero.)
+            // if (pointsHave < 0) {
+            //     pointsHave = 0;
+            // }
             let text = "";
+            //check for plural word
             if (pointsWagered > 1) {
                 text = `YOU LOSE ${pointsWagered} POINTS`;
             } else {
@@ -713,6 +737,7 @@ function checkFirstHandForDealer() {
             //PLAYER WINS       
             pointsHave = pointsHave + pointsWagered;
             let text = "";
+            //check for plural word
             if (pointsWagered > 1) {
                 text = `YOU WIN ${pointsWagered} POINTS`;
             } else {
@@ -729,7 +754,7 @@ function checkFirstHandForDealer() {
     return (1);
 }
 
-
+//just outcomes based on players hand - every card draw runs this
 function checkPlayerTopRowForCompleteness() {
     //If there is an ace and deal is over 21 change next ace to a one.
     //if there is an ace, than reduce the score by ten.  because eleven becomes 1.
@@ -746,10 +771,13 @@ function checkPlayerTopRowForCompleteness() {
     //Player scores over 21, so busts.
     if (playerScoreTopRow > 21) {
         pointsHave = pointsHave - pointsWagered;
-        if (pointsHave < 0) {
-            pointsHave = 0;
-        }
+        
+        //player situation checked on card draw: bust, charlie, etc.  If there is a split this could be completed before or after bottom row. If this is the second bust, double the wager can be deducted that will result in negative points, so reset to zero.
+         if (pointsHave < 0) {
+             pointsHave = 0;
+         }
         let text = "";
+        //checks for plural text
         if (pointsWagered > 1) {
             text = `BUST!  YOU LOSE ${pointsWagered} POINTS`;
         } else {
@@ -777,9 +805,11 @@ function checkPlayerTopRowForCompleteness() {
     }
     //Five cards wins, alternatehandforcharlie is a count with aces counting as one not eleven.
     else if (alternateHandForCharlieTopRow < 22 && numberOfCardsDeltTopRow == 5) {
+
         console.log("5 Card Charlie");
         pointsHave = pointsHave + (pointsWagered * 2);
         let text = "";
+        //checks for plural text
         if (pointsWagered > 1) {
             text = `5 CARDS!  YOU WIN ${pointsWagered * 2} POINTS`;
         } else {
@@ -792,6 +822,7 @@ function checkPlayerTopRowForCompleteness() {
         //checks for deals done to display buttons when firstdealisdoneflag is true.
         checkEndOfHands();
     }
+    //returns and plays the card on table
     return (1);
 }
 
@@ -810,11 +841,19 @@ function checkPlayerBottomRowForCompleteness() {
     console.log("playerScoreBottomRowa", playerScoreBottomRow);
     //Player scores over twenty-one, so player busts and loses.
     if (playerScoreBottomRow > 21) {
+        //player situation checked on card draw: bust, charlie, etc.
+        //if there is a split this could be completed before or after top row
+        //if this is the second bust, it can deduct from just points made so by the original wager, so it could be negative, and be changed to zero.
+
+       
         pointsHave = pointsHave - pointsWagered;
+        
+        
         if (pointsHave < 0) {
             pointsHave = 0;
         }
         let text = "";
+        //checks for plural text
         if (pointsWagered > 1) {
             text = `BUST!  YOU LOSE ${pointsWagered} POINTS`;
         } else {
@@ -845,6 +884,7 @@ function checkPlayerBottomRowForCompleteness() {
         console.log("5 Card Charlie");
         pointsHave = pointsHave + (pointsWagered * 2);
         let text = "";
+        //check for plural word
         if (pointsWagered > 1) {
             text = `5 CARDS!  YOU WIN ${pointsWagered * 2} POINTS`;
         } else {
@@ -862,22 +902,6 @@ function checkPlayerBottomRowForCompleteness() {
 setsUpGame();
 
 
-function firstHandPrompt(){
-    let card = prompt("Enter Users 1st Card:")
-    return card;
-}
-
-
-function secondHandPrompt(){
-    let card = prompt("Enter Users 2nd Card:")
-    return card;
-}
-
-
-function dealersHandPrompt(){
-    let card = prompt("Enter Dealers Next Card:")
-    return card;
-}
 
 </script>
 </body>
