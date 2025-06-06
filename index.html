@@ -46,17 +46,16 @@
         </div>
     </div>
     <script>
+
 const AMOUNT_OF_STARTING_POINTS = 10;
 // Space between adjacent cards when displayed.
 const CARDGAP = 70;
 // Total number of cards in four decks combined.
 const AMTOFCARDS = (52 * 4);
-
 // Canvas elements for the dealer and two player rows.
 let canvasDealer = document.getElementById("canvasDealer");
 let canvasPlayerTopCards = document.getElementById("canvasPlayerTopCards");
 let canvasPlayerBottomCards = document.getElementById("canvasPlayerBottomCards");
-
 canvasPlayerBottomCards.style.visibility = 'hidden';
 messageLower = 'hidden';
 drawCardBtnLower.disabled = true;
@@ -76,7 +75,6 @@ let counterOfPressedDealerDrawBtn = 0;
 // Canvas context for the dealer's cards, used globally.
 let ctx1 = canvasDealer.getContext("2d");
 let totalAllCardsPlayedBeforeShuffle = 0;
-
 
 async function drawDealerCards() {
     // Skip dealer's turn if both player hands are complete (blackjack, busted, or charlie).
@@ -99,12 +97,10 @@ async function drawDealerCards() {
         // Increment card position multiplier for drawing cards in a row.
         multiplierRow1++;
         let mark = getMarkOfCard();
-        
         //
         mark = Number(prompt("Enter a dealer card:"));
         //console.log("Your dealer card is:", number);
         //
-        
         // Face cards (Q, K, J) and ten are all valued at 10 points.
         if (mark == "Q" || mark == "K" || mark == "J" || mark == "10") {
             mark = "10";
@@ -141,19 +137,18 @@ async function drawDealerCards() {
     // Evaluate results of dealer hand against both player hands.
     checkFirstHandWithDealer();
     checkSecondHandWithDealer();
-    
     isAllDelt = true;
     multiplierRow1 = -1;
     dealerHandTotal = 0;
     dealCardsBtn.disabled = true;
      console.log("dealerScoreTotal: ", dealerHandTotal)
 }
+
 // Starting amount of points for player.
 let pointsHave = AMOUNT_OF_STARTING_POINTS;
 let pointsWagered = 0;
 // Multiplier to position cards in top player row.
 let multiplierTopRow = -1;
-
 let counterAcesRow = -1;
 let numberOfCardsDeltTopRow = 0;
 let isThereASecondDeal = false;
@@ -163,24 +158,19 @@ let alternateHandForCharlieTopRow = 0;
 let counterOfPressedUpperDrawBtn = 0;
 // Canvas context for top player row.
 let ctx2 = canvasPlayerTopCards.getContext("2d");
-
 let tenCounter = 0;
 let IsADivideFlag = false;
-
 
 function drawPlayerCardTop() {
     SetAllWagerButtonsToDisabled(true);
     totalAllCardsPlayedBeforeShuffle++;
-    
     counterOfPressedUpperDrawBtn++;
     divide.disabled = true;
     multiplierTopRow++;
     mark = getMarkOfCard();
     ///
     mark = Number(prompt("Enter a player top card:"));
-
     ///
-    
     // Draw the card rectangle in blue.
     ctx2.beginPath();
     ctx2.fillStyle = 'blue';
@@ -208,7 +198,6 @@ function drawPlayerCardTop() {
     else if (mark == "A") {
         numberOfCardsDeltTopRow++;
         counterAcesRow = counterAcesRow + 1;
-        
         playerScoreTopRow = playerScoreTopRow + 11;
         // Mark this card as an ace in the ace tracking array.
         AreThereAcesArrayRow[counterAcesRow] = "is top row ace";
@@ -229,7 +218,6 @@ function drawPlayerCardTop() {
     // Enable divide button if first two cards are tens and player has enough points.
     else if (tenCounter == 2) {
         dealCardsBtn.disabled = false;
-        
         numberOfCardsDeltTopRow--;
         divide.disabled = false;
         tenCounter = 0;
@@ -255,9 +243,8 @@ function drawPlayerCardTop() {
     //testing
      console.log("playerScore1: ", playerScoreTopRow)
 }
-//Controls the spacing of the cards.   
-/////END OF SECTION 1///////////////////////////////////////////////////////
-/////START OF 2ND SECTION///////////////////////////////////////////////////
+
+
 let multiplierBottomRow = -1;
 let totalCardsDeltBottomRow = 0;
 let numberOfIterationsBottomRow = 0;
@@ -267,18 +254,14 @@ let alternateHandForCharlieBottomRow = 0;
 let counterOfPressedLowerDrawBtn = 0;
 //Graphical context.
 let ctx3 = canvasPlayerBottomCards.getContext("2d");
-
-
 //This is the lower row of cards for when two tens are divided.
-function drawPlayerCardBottom(mark) {
 
-    
+function drawPlayerCardBottom(mark) {
     //For shuffling.
     totalAllCardsPlayedBeforeShuffle++;
     //used for debugging differen set marks
     counterOfPressedLowerDrawBtn++;
     numberOfCardsDeltBottomRow++;
-   
     numberOfIterationsBottomRow++;
     //comes from click
     if (mark === "0") {
@@ -286,34 +269,12 @@ function drawPlayerCardBottom(mark) {
         ///
         mark = Number(prompt("Enter a player bottom card:"));
         ///
-        
     }
-    // Left this block for testing specific card sequences by overriding 'mark'.
-    // For splitting two tens, do not uncomment the first 'if' condition here.
-    // Ensure counterOfPressedLowerDrawBtn increments correctly and set two '10' values in drawPlayerCardTopRow.
-    // Otherwise, change the 'if' conditions to test specific card values.
-    // Comment out this whole block during normal play.
-    /*
-    if (counterOfPressedLowerDrawBtn == 1) {
-        mark = "10";
-    }
-    else if (counterOfPressedLowerDrawBtn == 2) {
-        mark = "A";
-    } else if (counterOfPressedLowerDrawBtn == 3) {
-        mark = "2";
-    } else if (counterOfPressedLowerDrawBtn == 4) {
-        mark = "2";
-    } else if (counterOfPressedLowerDrawBtn == 5) {
-        mark = "A";
-    } else if (counterOfPressedLowerDrawBtn == 6) {
-        mark = "2";
-    }
-    */
+   
     // Makes the bust message and player bottom cards canvas visible.
     document.getElementById('messageLower').style.visibility = 'visible';
     document.getElementById('canvasPlayerBottomCards').style.visibility = 'visible';
     drawCardBtnLower.disabled = false;
-    
     multiplierBottomRow++;
     //Graphic context
     ctx3 = canvasPlayerBottomCards.getContext("2d");
@@ -361,13 +322,10 @@ function drawPlayerCardBottom(mark) {
         ctx3.fillText(mark, INITIALROW + (multiplierBottomRow * CARDGAP) + 11, 57);
     }
     //testing
-    
     console.log("playerScore2: ", playerScoreBottomRow)
 }
 
-
 //On start, these buttons are disabled (wage buttons will be false (not disabled))
-
 function setsUpGame() {
     newRoundBtn.disabled = true;
     drawCardBtnUpper.disabled = true;
@@ -377,25 +335,20 @@ function setsUpGame() {
 
 //20 decks
 deckUseage = new Array(260).fill(0);
-
 let singleDeck = ["A", "Q", "K", "J", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
 //one super array of all 20 decks
 let decks = Array.from({ length: 20 }, () => [...singleDeck]).flat();
     let text = "BLACKJACK 5 card dealer";
     document.getElementById('title').textContent = text;
-
     // Attempts to select a random unused card from the decks, searching backward then forward if needed.
     function getMarkOfCard() {
     const random = new Math.seedrandom(); 
     const index = Math.trunc(random() * 259); // Range: 0 to 258
-
-
     // Try the random index first, if isn't avaliable search backwards and then forwards in array
     if (deckUseage[index] === 0) {
         deckUseage[index] = 1;
         return decks[index];
     }
-
     // Search backward from index
     for (let i = index - 1; i >= 0; i--) {
         if (deckUseage[i] === 0) {
@@ -403,7 +356,6 @@ let decks = Array.from({ length: 20 }, () => [...singleDeck]).flat();
             return decks[i];
         }
     }
-
     // Search forward from index + 1
     for (let i = index + 1; i < AMTOFCARDS; i++) {
         if (deckUseage[i] === 0) {
@@ -411,12 +363,9 @@ let decks = Array.from({ length: 20 }, () => [...singleDeck]).flat();
             return decks[i];
         }
     }
-
     // No cards available
     return null;
 }
-
-
 
 function SetAllWagerButtonsToDisabled(visibleflagisdisabled){
 // Select all elements with the class 'wager-button'
@@ -426,19 +375,16 @@ wagerButtons.forEach(button => {
 });
 }
 
-
 function wager(points_Wagered) {
     //Not enough points to make wager.
     if (points_Wagered > pointsHave) {
         return (1);
     }
-    
     pointsWagered = points_Wagered;
     //Makes upper draw button show and make all waging button not showing.
     drawCardBtnUpper.disabled = false;
     SetAllWagerButtonsToDisabled(true);
 }
-
 
 function onDivideHand() {
     IsADivideFlag = true;
@@ -457,9 +403,8 @@ function onDivideHand() {
     ctx2.clearRect(INITIALROW + (CARDGAP) - 1, 0, 52, 78);
     playerScoreTopRow = playerScoreTopRow - 10;
 }
-
-
 //Reset all values to initial state for next new round.
+
 async function newRound() {
     if (pointsHave >= 400) {
         endGame();
@@ -489,11 +434,6 @@ async function newRound() {
     document.getElementById('messageLower').textContent = "";
     document.getElementById('messageUnderTopRow').textContent = "";
     SetAllWagerButtonsToDisabled(false);
-    /////END OF SECTION 2///////////////////////////////////////////////////////
-    /////START OF 3rd SECTION///////////////////////////////////////////////////
-
-// Reset all relevant game state values to prepare for a new round
-    // Used to calculate card spacing in the dealer's row
     multiplierRow1 = -1;
     dealerHandTotal = 0;
     isAllDelt = false;
@@ -522,14 +462,12 @@ async function newRound() {
     counterOfPressedLowerDrawBtn = 0;
     counterOfPressedDealerDrawBtn = 0;
     // Track ace count in player's hands
-
     for (let i = 0; i < 4 * 5; i++) {
         // Mark ace as used if it was in top or bottom row
         if (AreThereAcesArrayRow[i] == "is top row ace" || AreThereAcesArrayRow[i] == "is bottom row ace") {
          AreThereAcesArrayRow[i] = "used ace";
         }
     }
-
     // Shuffle deck if more than half of cards have been used
     if (totalAllCardsPlayedBeforeShuffle >= ((AMTOFCARDS) / 2)) {
         shuffleTheDeck();
@@ -595,10 +533,7 @@ function endGame() {
 
 function checkSecondHandWithDealer() {
     // Evaluate outcome of second hand vs dealer (if second hand exists and hasn't been processed)
-        
-
     if (SecondDealIsDoneFlag == false && isThereASecondDeal) {
-        
         // Dealer busts
         console.log("dealerHandTotal:", dealerHandTotal )
         if (dealerHandTotal > 21) {
@@ -644,7 +579,6 @@ function checkSecondHandWithDealer() {
 
 // Called when dealer finishes drawing cards; resolves first hand vs dealer
 function checkFirstHandWithDealer() {
-    
     // Skip if hand already evaluated
     if (FirstDealIsDoneFlag == false) {
         if (dealerHandTotal > 21) {
@@ -686,10 +620,6 @@ function checkFirstHandWithDealer() {
     return (1);
 }
 
-/////END OF SECTION 3///////////////////////////////////////////////////////
-/////START OF 4th SECTION///////////////////////////////////////////////////
-
-// Just evaluates player's hand after each card draw
 function checkPlayerTopRowForCompleteness() {
     // If there's an ace and the total is over 21, convert one ace from 11 to 1 by subtracting 10
     if (playerScoreTopRow > 21) {
@@ -701,11 +631,9 @@ function checkPlayerTopRowForCompleteness() {
             }
         }
     }
-    
     // Player busts (score > 21), subtract wagered points
     if (playerScoreTopRow > 21) {
         pointsHave = pointsHave - pointsWagered;
-
         // In case both top and bottom rows bust, prevent negative points by resetting to 0
         if (pointsHave < 0) {
             pointsHave = 0;
@@ -739,7 +667,6 @@ function checkPlayerTopRowForCompleteness() {
     }
     // Player has 5 cards under 22 – wins via 5 Card Charlie
     else if (alternateHandForCharlieTopRow < 22 && numberOfCardsDeltTopRow == 5) {
-
         console.log("5 Card Charlie");
         pointsHave = pointsHave + (pointsWagered * 2);
         let text = "";
@@ -760,7 +687,6 @@ function checkPlayerTopRowForCompleteness() {
     return (1);
 }
 
-
 function checkPlayerBottomRowForCompleteness() {
     // If there's an ace and the total is over 21, convert one ace from 11 to 1 by subtracting 10
     if (playerScoreBottomRow > 21) {
@@ -773,7 +699,6 @@ function checkPlayerBottomRowForCompleteness() {
         }
     }
     console.log("playerScoreBottomRowa", playerScoreBottomRow);
-    
     // Player busts (score > 21), subtract wagered points
     if (playerScoreBottomRow > 21) {
         // If both rows bust, ensure points don’t drop below zero
@@ -830,7 +755,6 @@ function checkPlayerBottomRowForCompleteness() {
 }
 
 setsUpGame();
-
 </script>
 </body>
 </html>
