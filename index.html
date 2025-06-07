@@ -1,3 +1,4 @@
+<!--Final testing complete (6/6/25):  Verified every hand type across all three hands. For each hand, ensured all five cards were individually validated.-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -97,8 +98,8 @@ async function drawDealerCards() {
         // Increment card position multiplier for drawing cards in a row.
         multiplierRow1++;
         let mark = getMarkOfCard();
-        //
-        mark = (prompt("Enter a dealer card:"));
+        //testing
+        //mark = (prompt("Enter a dealer card:"));
         //console.log("Your dealer card is:", number);
         //
         // Face cards (Q, K, J) and ten are all valued at 10 points.
@@ -241,7 +242,7 @@ function drawPlayerCardTop() {
         ctx2.fillText(mark, INITIALROW + (multiplierTopRow * CARDGAP) + 11, 57);
     }
     //testing
-     console.log("playerScore1: ", playerScoreTopRow)
+    //console.log("playerScore1: ", playerScoreTopRow)
 }
 
 let multiplierBottomRow = -1;
@@ -321,7 +322,7 @@ function drawPlayerCardBottom(mark) {
         ctx3.fillText(mark, INITIALROW + (multiplierBottomRow * CARDGAP) + 11, 57);
     }
     //testing
-    console.log("playerScore2: ", playerScoreBottomRow)
+    //console.log("playerScore2: ", playerScoreBottomRow)
 }
 
 //On start, these buttons are disabled (wage buttons will be false (not disabled))
