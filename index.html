@@ -7,7 +7,7 @@
     <link rel="icon" type="image/png" href="favicon.png">
     <link rel="stylesheet" href="style.css">
 </head>
-<body onunload="deleteArray()">
+<body>
     <!-- 4/18/25:  charlie and BJ working on both player rows
      dealer doesn't get BJs or 5 card charlies -->
     <script src=https://cdnjs.cloudflare.com/ajax/libs/mathjs/3.3.0/math.min.js> </script> <script
@@ -98,7 +98,7 @@ async function drawDealerCards() {
         multiplierRow1++;
         let mark = getMarkOfCard();
         //
-        mark = Number(prompt("Enter a dealer card:"));
+        mark = (prompt("Enter a dealer card:"));
         //console.log("Your dealer card is:", number);
         //
         // Face cards (Q, K, J) and ten are all valued at 10 points.
@@ -168,8 +168,8 @@ function drawPlayerCardTop() {
     divide.disabled = true;
     multiplierTopRow++;
     mark = getMarkOfCard();
-    ///
-    mark = Number(prompt("Enter a player top card:"));
+    
+    mark = (prompt("Enter a player top card:"));
     ///
     // Draw the card rectangle in blue.
     ctx2.beginPath();
@@ -266,7 +266,7 @@ function drawPlayerCardBottom(mark) {
     if (mark === "0") {
         mark = getMarkOfCard();
         ///
-        mark = Number(prompt("Enter a player bottom card:"));
+        mark = (prompt("Enter a player bottom card:"));
         ///
     }
    
@@ -339,6 +339,7 @@ let singleDeck = ["A", "Q", "K", "J", "2", "3", "4", "5", "6", "7", "8", "9", "1
 let decks = Array.from({ length: 20 }, () => [...singleDeck]).flat();
     let text = "BLACKJACK 5 card dealer";
     document.getElementById('title').textContent = text;
+    
     // Attempts to select a random unused card from the decks, searching backward then forward if needed.
     function getMarkOfCard() {
     const random = new Math.seedrandom(); 
@@ -510,7 +511,7 @@ function checkEndOfHands() {
             dealCardsBtn.disabled = true;
         }
     }
-    SetAllWagerButtonsToDisabled(false)
+    //SetAllWagerButtonsToDisabled(false)
 }
 
 // Set deck usage to zero, disable buttons, show "shuffling" message, then re-enable buttons after delay
@@ -697,7 +698,7 @@ function checkPlayerBottomRowForCompleteness() {
             }
         }
     }
-    console.log("playerScoreBottomRowa", playerScoreBottomRow);
+    //console.log("playerScoreBottomRowa", playerScoreBottomRow);
     // Player busts (score > 21), subtract wagered points
     if (playerScoreBottomRow > 21) {
         // If both rows bust, ensure points don’t drop below zero
